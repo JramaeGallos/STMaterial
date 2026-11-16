@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tasks, Not Jobs</title>
+<meta name="description" content="An interactive explainer for Filipino Senior High School students on how artificial intelligence is changing work, who it affects most, and what you can do about it.">
+<meta property="og:title" content="Tasks, Not Jobs: What AI Really Means for the Work You're Studying For">
+<meta property="og:description" content="Papalitan ba ako ng AI? A reality check for future Filipino workers, based on ILO, IMF and peer-reviewed research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf8f3; --surface:#ffffff; --surface-2:#f3eee6; --ink:#1d1b26; --ink-2:#4a4658; --line:#e2dbcf;
+  --brand:#3b3bd6; --brand-ink:#ffffff; --brand-soft:#e6e6ff;
+  --auto:#c8452f; --auto-soft:#fbe3dd;
+  --assist:#a86b00; --assist-soft:#fbefd6;
+  --human:#1b7f6e; --human-soft:#d8f1ec;
+  --muted:#c9c2b6;
+  --shadow:0 1px 2px rgba(29,27,38,.06),0 8px 24px rgba(29,27,38,.06);
+  --radius:16px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#14131b; --surface:#1e1c28; --surface-2:#272434; --ink:#f1eef7; --ink-2:#b9b4c9; --line:#363246;
+    --brand:#8f8fff; --brand-ink:#14131b; --brand-soft:#2a2a55;
+    --auto:#ff8a73; --auto-soft:#3f231e; --assist:#f2b84b; --assist-soft:#3a2f17; --human:#4fd1b7; --human-soft:#173832;
+    --muted:#4a4560; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14131b; --surface:#1e1c28; --surface-2:#272434; --ink:#f1eef7; --ink-2:#b9b4c9; --line:#363246;
+  --brand:#8f8fff; --brand-ink:#14131b; --brand-soft:#2a2a55;
+  --auto:#ff8a73; --auto-soft:#3f231e; --assist:#f2b84b; --assist-soft:#3a2f17; --human:#4fd1b7; --human-soft:#173832;
+  --muted:#4a4560; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;line-height:1.15;letter-spacing:-.01em;margin:0 0 .5em}
+h1{font-size:clamp(2.1rem,7vw,3.6rem)}
+h2{font-size:clamp(1.6rem,4.6vw,2.3rem)}
+h3{font-size:1.15rem}
+p{margin:0 0 1em}
+a{color:var(--brand)}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+section{padding:64px 0;border-top:1px solid var(--line);scroll-margin-top:56px}
+.kicker{display:inline-block;font:600 .78rem/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin-bottom:12px}
+.lead{font-size:1.15rem;color:var(--ink-2)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.note{font-size:.85rem;color:var(--ink-2)}
+.cite{font-size:.8rem;color:var(--ink-2);white-space:nowrap;text-decoration:underline dotted;text-underline-offset:3px}
+a.cite:hover{color:var(--brand)}
+.grid2{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:680px){.grid2{grid-template-columns:1fr 1fr}}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--brand);outline-offset:3px;border-radius:8px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--brand);color:var(--brand-ink);padding:8px 12px;border-radius:8px;z-index:20}
+.skip:focus{left:8px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:52px;gap:12px}
+.logo{font:700 1rem "Space Grotesk",sans-serif;text-decoration:none;color:var(--ink)}
+.logo span{color:var(--brand)}
+.progress{position:absolute;left:0;bottom:-1px;height:3px;background:var(--brand);width:0}
+.iconbtn{background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:.85rem}
+
+/* hero */
+.hero{padding:56px 0 48px;border-top:0}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.feed{display:grid;gap:12px;margin-top:28px}
+.post{text-align:left;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;color:var(--ink);box-shadow:var(--shadow);transition:transform .2s}
+.post:hover{transform:translateY(-2px)}
+.post .who{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--ink-2);margin-bottom:8px}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-weight:700;color:var(--ink-2)}
+.post .claim{display:block;font-weight:600;font-size:1.05rem}
+.post .tap{display:inline-block;margin-top:10px;font-size:.8rem;color:var(--brand);font-weight:600}
+.verdict{display:none;margin-top:12px;padding:12px;border-radius:12px;background:var(--surface-2);font-size:.95rem}
+.post[aria-expanded="true"] .verdict{display:block}
+.post[aria-expanded="true"] .tap{display:none}
+.jump{color:var(--brand);font-weight:600;white-space:nowrap}
+.tag{display:inline-block;font:700 .72rem/1 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:6px;margin-right:6px;vertical-align:middle}
+.tag.mis{background:var(--auto-soft);color:var(--auto)}
+.tag.half{background:var(--assist-soft);color:var(--assist)}
+.tag.ok{background:var(--human-soft);color:var(--human)}
+.scroll-cue{margin-top:28px;font-size:.9rem;color:var(--ink-2)}
+
+/* job explorer */
+.metaphor{display:flex;gap:14px;align-items:flex-start;background:var(--brand-soft);border-radius:var(--radius);padding:18px;margin:20px 0}
+.metaphor svg{flex:0 0 44px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:.92rem;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.ladder{list-style:none;margin:16px 0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.ladder li{text-align:center;font-size:.72rem;line-height:1.25;color:var(--ink-2)}
+.ladder li i{display:block;height:12px;border-radius:4px;background:var(--surface-2);margin-bottom:6px;border:1px solid var(--line)}
+.ladder li.on{color:var(--ink);font-weight:700}
+.ladder li.on i{border-color:transparent}
+.ladder li.l0.on i,.ladder li.l1.on i{background:var(--human)}
+.ladder li.l2.on i,.ladder li.l3.on i{background:var(--assist)}
+.ladder li.l4.on i,.ladder li.l5.on i{background:var(--auto)}
+.level-badge{display:inline-block;font:700 .8rem/1 Inter,sans-serif;padding:6px 10px;border-radius:8px;margin-bottom:10px}
+.level-badge.lo{background:var(--human-soft);color:var(--human)}
+.level-badge.mid{background:var(--assist-soft);color:var(--assist)}
+.level-badge.hi{background:var(--auto-soft);color:var(--auto)}
+.extra{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--surface-2);font-size:.95rem}
+
+/* waffle */
+.toggle{display:inline-flex;background:var(--surface-2);border-radius:999px;padding:4px;gap:4px;margin:8px 0 16px;flex-wrap:wrap}
+.toggle button{border:0;background:transparent;color:var(--ink);padding:8px 14px;border-radius:999px;font-weight:600;font-size:.9rem}
+.toggle button[aria-pressed="true"]{background:var(--surface);box-shadow:var(--shadow);color:var(--brand)}
+.waffle-wrap{display:grid;gap:20px;grid-template-columns:1fr;align-items:center}
+@media (min-width:680px){.waffle-wrap{grid-template-columns:260px 1fr}}
+.waffle{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:260px}
+.waffle i{aspect-ratio:1;border-radius:4px;background:var(--muted);transition:background .4s}
+.waffle i.a{background:var(--human)} .waffle i.b{background:var(--auto)} .waffle i.c{background:var(--assist)}
+.stat{font:700 2.4rem/1 "Space Grotesk",sans-serif;margin:0 0 4px}
+.wlegend{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px;font-size:.95rem}
+.wlegend li{display:flex;gap:10px;align-items:flex-start}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.wlegend .sw{margin-top:6px;flex:0 0 12px}
+
+/* compare */
+.vs{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:680px){.vs{grid-template-columns:1fr auto 1fr;align-items:stretch}}
+.vs .mid{display:grid;place-items:center;font:700 1rem "Space Grotesk";color:var(--ink-2)}
+.agree{margin-top:16px;background:var(--human-soft);border-radius:var(--radius);padding:18px}
+.agree strong{color:var(--human)}
+
+/* who cards */
+.who-grid{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:680px){.who-grid{grid-template-columns:1fr 1fr}}
+.big{font:700 2rem/1 "Space Grotesk",sans-serif;color:var(--brand);margin-bottom:6px}
+
+/* humans in the loop */
+.loop{display:grid;gap:16px;grid-template-columns:1fr;margin-top:24px;counter-reset:role}
+@media (min-width:760px){.loop{grid-template-columns:repeat(3,1fr)}}
+.role{position:relative;display:flex;flex-direction:column}
+.role .ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;background:var(--brand-soft);margin-bottom:12px}
+.role .step{font:700 .72rem/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin-bottom:6px}
+.role .think{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);font-size:.92rem;color:var(--ink-2)}
+.role .think strong{color:var(--ink)}
+.closing{margin-top:20px;font:600 1.1rem/1.4 "Space Grotesk",sans-serif;text-align:center}
+
+/* quiz */
+.q{margin-bottom:14px}
+.q .opts{display:flex;gap:8px;margin-top:10px}
+.q .opts button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font-weight:600}
+.q .opts button[disabled]{cursor:default;opacity:.65}
+.q .opts button.right{background:var(--human-soft);border-color:var(--human);color:var(--human);opacity:1}
+.q .opts button.wrong{background:var(--auto-soft);border-color:var(--auto);color:var(--auto);opacity:1}
+.q .exp{margin-top:10px;font-size:.95rem;display:none}
+.q.done .exp{display:block}
+.q .src{display:block;margin-top:8px;font-size:.82rem;color:var(--ink-2);padding:8px 10px;border-left:3px solid var(--brand);background:var(--surface-2);border-radius:0 8px 8px 0;overflow-wrap:anywhere}
+.score{font-weight:600;margin-top:12px}
+
+/* checklist */
+.check{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.check label{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer}
+.check input{width:20px;height:20px;margin-top:3px;accent-color:var(--brand);flex:0 0 auto}
+.meter{margin-top:16px;padding:16px;border-radius:12px;background:var(--surface-2)}
+.skills{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:680px){.skills{grid-template-columns:1fr 1fr}}
+.adults{margin-top:28px;background:var(--brand-soft);border-radius:var(--radius);padding:20px}
+.passcard{margin-top:28px;display:flex;gap:16px;align-items:flex-start;border:2px dashed var(--brand);border-radius:var(--radius);padding:20px;background:var(--surface)}
+.passcard .ico{font-size:1.8rem;line-height:1}
+.passcard p{margin:0}
+
+/* refs */
+.refs{font-size:.9rem;color:var(--ink-2)}
+.refs ol{padding:0;margin:0}
+.refs li{margin-bottom:12px;padding:8px 8px 8px 2.6em;text-indent:-2em;list-style:none;overflow-wrap:anywhere;border-radius:8px}
+.refs li:target{background:var(--brand-soft);color:var(--ink)}
+footer{padding:32px 0 64px;border-top:1px solid var(--line);font-size:.85rem;color:var(--ink-2)}
+.cc{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="#top">Tasks<span>,</span> Not Jobs</a>
+    <button class="iconbtn" id="themeBtn" type="button" aria-label="Switch light or dark theme">◐ Theme</button>
+  </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+
+<!-- 0. HOOK -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <span class="kicker">An interactive reality check · 8-minute read</span>
+    <h1>Papalitan ba ako ng AI?<br><em>Tasks, not jobs.</em></h1>
+    <p class="lead">You've probably seen reels saying AI will wipe out jobs, so why bother studying? Before you pick your college course, let's check claims like that against what researchers have actually found.</p>
+    
+    <div class="feed">
+      <button class="post" type="button" aria-expanded="false">
+        <span class="who"><span class="avatar" aria-hidden="true">1</span>Sample post #1</span>
+        <span class="claim">"AI will replace ALL jobs in 5 years. Don't waste money on college. 😱"</span>
+        <span class="tap">Tap to fact-check →</span>
+        <span class="verdict"><span class="tag mis">Misleading</span>In the Philippines, only 3.6% of jobs are in the highest generative-AI exposure group. For most exposed jobs, the ILO expects tasks to change, not whole jobs to vanish <span class="cite">(Huynh, 2026)</span>. <span class="jump">See the numbers ↓</span></span>
+      </button>
+      <button class="post" type="button" aria-expanded="false">
+        <span class="who"><span class="avatar" aria-hidden="true">2</span>Sample post #2</span>
+        <span class="claim">"AI only affects tech people. If you're not in IT, relax lang."</span>
+        <span class="tap">Tap to fact-check →</span>
+        <span class="verdict"><span class="tag mis">False</span>Clerical support jobs have the highest exposure <span class="cite">(Gmyrek et al., 2025)</span>. Young Filipino workers are also more likely to hold clerical and service and sales jobs <span class="cite">(Huynh, 2026)</span>. <span class="jump">Who's affected ↓</span></span>
+      </button>
+      <button class="post" type="button" aria-expanded="false">
+        <span class="who"><span class="avatar" aria-hidden="true">3</span>Sample post #3</span>
+        <span class="claim">"People who learn to work WITH AI will have an advantage."</span>
+        <span class="tap">Tap to fact-check →</span>
+        <span class="verdict"><span class="tag half">Some evidence</span>In a study of 5,172 customer-support agents, an AI assistant raised productivity by about 15% on average, and less-experienced workers gained the most <span class="cite">(Brynjolfsson et al., 2025)</span>. That's one industry, so it isn't proof for every job. <span class="jump">Your move ↓</span></span>
+      </button>
+    </div>
+    <p class="scroll-cue">↓ Scroll to see how AI really changes work</p>
+  </div>
+</section>
+
+<!-- 1. TASKS -->
+<section id="tasks" aria-labelledby="h-tasks">
+  <div class="wrap">
+    <span class="kicker">1 · The big idea</span>
+    <h2 id="h-tasks">A job is a bundle of tasks</h2>
+    <p>The International Labour Organization (ILO) doesn't just ask "Will AI take this job?" Its researchers scored <strong>29,753 individual work tasks</strong> to see which ones generative AI could potentially do, then rated each occupation based on its tasks <a class="cite" href="#r-gmyrek">(Gmyrek et al., 2025)</a>.</p>
+
+    <div class="metaphor">
+      <svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="var(--brand)"/><rect x="12" y="13" width="20" height="3" rx="1.5" fill="var(--brand-ink)"/><rect x="12" y="20" width="14" height="3" rx="1.5" fill="var(--brand-ink)"/><rect x="12" y="27" width="17" height="3" rx="1.5" fill="var(--brand-ink)"/><circle cx="31" cy="28.5" r="3" fill="var(--brand-ink)"/></svg>
+      <p style="margin:0"><strong>Think of a job like a playlist.</strong> AI can remix or skip some tracks, but there's still a playlist. The ILO puts it this way: since most occupations include tasks that need human input, <em>transformation</em> of jobs is the most likely impact <a class="cite" href="#r-gmyrek">(Gmyrek et al., 2025)</a>.</p>
+    </div>
+
+    <h3>Try it: look up a job's official ILO exposure level</h3>
+    <div class="chips" role="group" aria-label="Choose a job" id="jobChips"></div>
+
+    <div class="card" aria-live="polite">
+      <h3 id="jobTitle" style="margin-bottom:2px"></h3>
+      <p class="note" id="jobCode" style="margin:0"></p>
+      <ol class="ladder" id="ladder" aria-hidden="true">
+        <li class="l0"><i></i>Not exposed</li>
+        <li class="l1"><i></i>Minimal</li>
+        <li class="l2"><i></i>Gradient 1</li>
+        <li class="l3"><i></i>Gradient 2</li>
+        <li class="l4"><i></i>Gradient 3</li>
+        <li class="l5"><i></i>Gradient 4 (highest)</li>
+      </ol>
+      <span class="level-badge" id="jobBadge"></span>
+      <p id="jobMeaning" style="margin:0"></p>
+      <div class="extra" id="jobExtra"></div>
+    </div>
+    <p class="note" style="margin-top:12px">Exposure levels come from the ILO's global index annex <a class="cite" href="#r-gmyrek">(Gmyrek et al., 2025, Annex, pp. 51–61)</a>. Level descriptions are summarized from the ILO's definitions <a class="cite" href="#r-huynh">(Huynh, 2026, Annex)</a>. <strong>Exposure means AI could potentially perform many of a job's tasks. It does not mean the job will disappear.</strong></p>
+  </div>
+</section>
+
+<!-- 2. NUMBERS -->
+<section id="numbers" aria-labelledby="h-num">
+  <div class="wrap">
+    <span class="kicker">2 · The Philippine numbers</span>
+    <h2 id="h-num">What happens if we line up 100 Filipino workers?</h2>
+    <p>Two international institutions measured AI exposure in the Philippine workforce. Switch between them below. Each square is about 1 in 100 jobs.</p>
+
+    <div class="toggle" role="group" aria-label="Choose study">
+      <button type="button" aria-pressed="true" data-study="imf">IMF (AI in general)</button>
+      <button type="button" aria-pressed="false" data-study="ilo">ILO (generative AI)</button>
+    </div>
+
+    <div class="card waffle-wrap">
+      <div class="waffle" id="waffle" role="img"></div>
+      <div id="waffleText"></div>
+    </div>
+    <p class="note" style="margin-top:12px">Squares are rounded to the nearest whole number.</p>
+  </div>
+</section>
+
+<!-- 3. UNCERTAINTY -->
+<section id="why" aria-labelledby="h-why">
+  <div class="wrap">
+    <span class="kicker">3 · Science in progress</span>
+    <h2 id="h-why">Wait, why don't the numbers match?</h2>
+    <p>Good question! The two studies <strong>measured different things</strong>, so their results differ.</p>
+    <div class="vs">
+      <div class="card">
+        <h3>IMF</h3>
+        <p>Used a <strong>broad AI exposure measure</strong>, not only chatbots. It also rated whether AI is more likely to <em>complement</em> (support) workers or put their tasks at risk of <em>replacement</em> <a class="cite" href="#r-cucio">(Cucio &amp; Hennig, 2025)</a>.</p>
+        <p class="note" style="margin:0">Result: 36% of jobs highly exposed <a class="cite" href="#r-imf">(IMF, 2024)</a>.</p>
+      </div>
+      <div class="mid" aria-hidden="true">vs</div>
+      <div class="card">
+        <h3>ILO</h3>
+        <p>Looked only at <strong>generative AI</strong>, the kind that writes text and makes images. It used a global index built from 29,753 scored tasks <a class="cite" href="#r-gmyrek">(Gmyrek et al., 2025)</a>.</p>
+        <p class="note" style="margin:0">Result: 27.7% of jobs exposed; 3.6% in the highest group <a class="cite" href="#r-huynh">(Huynh, 2026)</a>.</p>
+      </div>
+    </div>
+    <div class="agree">
+      <p><strong>What both agree on:</strong> exposure is not the same as job loss. The IMF found that more than half of highly exposed jobs are ones where AI is more likely to support than replace tasks <a class="cite" href="#r-imf">(IMF, 2024)</a>. The ILO says exposure "does not necessarily equate to job loss" <a class="cite" href="#r-huynh">(Huynh, 2026, p. 3)</a>.</p>
+      <p style="margin:0"><strong>The honest limits:</strong> the ILO notes its global index may not fully reflect local Philippine conditions <a class="cite" href="#r-huynh">(Huynh, 2026, p. 3, note 7)</a>. Whether exposure leads to job losses also depends on whether employers adopt the technology and whether workers get chances to learn to work with it <a class="cite" href="#r-gmyrek">(Gmyrek et al., 2025)</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. WHO -->
+<section id="who" aria-labelledby="h-who">
+  <div class="wrap">
+    <span class="kicker">4 · Fairness check</span>
+    <h2 id="h-who">AI's impact isn't equal</h2>
+    <p>Here's the ethics part: AI exposure doesn't land evenly on everyone. Some groups carry more of it.</p>
+    <div class="who-grid">
+      <div class="card">
+        <div class="big">2×</div>
+        <h3>Women are more exposed</h3>
+        <p style="margin:0">40.3% of jobs held by women are exposed to generative AI, compared with 19.3% for men. Women make up about three in five clerical support and service and sales workers <a class="cite" href="#r-huynh">(Huynh, 2026, p. 5)</a>.</p>
+      </div>
+      <div class="card">
+        <div class="big">BPO</div>
+        <h3>The most exposed sector</h3>
+        <p style="margin:0">The IMF identifies business process outsourcing as the Philippines' most AI-exposed sector. It classifies BPO workers as highly exposed with low complementarity, the group more at risk of displacement <a class="cite" href="#r-cucio">(Cucio &amp; Hennig, 2025)</a>.</p>
+      </div>
+      <div class="card">
+        <div class="big">42.4%</div>
+        <h3>Metro Manila jobs exposed</h3>
+        <p style="margin:0">About two in five NCR jobs (2.6 million) are exposed, reflecting its many IT-BPM and other professional service jobs. Central Luzon and CALABARZON are above 30% <a class="cite" href="#r-huynh">(Huynh, 2026, pp. 1, 5–6)</a>.</p>
+      </div>
+      <div class="card">
+        <div class="big">1st job</div>
+        <h3>The entry-level ladder</h3>
+        <p style="margin:0">At a 2026 PIDS webinar, an expert warned that AI may weaken the traditional path through which workers gain experience and move up. That's the path you'd start on <a class="cite" href="#r-pids">(PIDS, 2026)</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. HUMANS IN THE LOOP -->
+<section id="humans" aria-labelledby="h-hum">
+  <div class="wrap">
+    <span class="kicker">5 · Behind the screen</span>
+    <h2 id="h-hum">Meet the humans in the loop</h2>
+    <p class="lead">AI looks automatic, but people are part of the system. Some <strong>train</strong> it, some <strong>check</strong> it, and some <strong>set the rules</strong> for it. Their stories show that AI at work is also a fairness question.</p>
+
+    <div class="loop">
+      <article class="card role">
+        <div class="ico" aria-hidden="true">🏷️</div>
+        <div class="step">1 · The trainers</div>
+        <h3>The people who teach AI</h3>
+        <p>AI learns from data that people label by hand. Washington Post reporters interviewed Filipino freelancers doing this work on Remotasks, a platform run by the AI company Scale AI. All but two said their pay had been <strong>delayed, reduced or cancelled</strong> after finishing tasks. The company said payment problems were very rare <a class="cite" href="#r-tan">(Tan &amp; Cabato, 2023)</a>.</p>
+        <p class="think"><strong>Think about it:</strong> Who should make sure online AI workers are paid fairly: the platform, the government, or both?</p>
+      </article>
+      <article class="card role">
+        <div class="ico" aria-hidden="true">🔍</div>
+        <div class="step">2 · The checkers</div>
+        <h3>The people who double-check AI</h3>
+        <p>AI output still needs a human eye. In a Department of Labor and Employment study, workers said their <strong>workload increased</strong> after AI was adopted. Some now spend extra time verifying AI-generated outputs and checking for errors <a class="cite" href="#r-pids">(PIDS, 2026)</a>.</p>
+        <p class="think"><strong>Think about it:</strong> If AI saves time but adds checking work, is the job easier, or just different?</p>
+      </article>
+      <article class="card role">
+        <div class="ico" aria-hidden="true">⚖️</div>
+        <div class="step">3 · The rule-makers</div>
+        <h3>The people who decide who benefits</h3>
+        <p>Technology alone doesn't decide who gains. The ILO calls for government, employers and workers to work together so that AI's <strong>benefits are inclusive</strong> and workers, especially youth, are protected and prepared <a class="cite" href="#r-huynh">(Huynh, 2026, p. 1)</a>. The IMF recommends stronger social protection, including unemployment insurance and reskilling programs <a class="cite" href="#r-cucio">(Cucio &amp; Hennig, 2025)</a>.</p>
+        <p class="think"><strong>Think about it:</strong> What should your school, your future employer and the government each do?</p>
+      </article>
+    </div>
+    <p class="closing">AI's impact on work isn't only about machines. It also depends on human choices, and that includes yours.</p>
+  </div>
+</section>
+
+<!-- 6. QUIZ -->
+<section id="quiz" aria-labelledby="h-quiz">
+  <div class="wrap">
+    <span class="kicker">6 · Check yourself</span>
+    <h2 id="h-quiz">Myth or Fact?</h2>
+    <p>Five quick ones. Each answer shows its source so you can check it yourself.</p>
+    <div id="quizBox"></div>
+    <p class="score" id="score" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- 7. YOUR MOVE -->
+<section id="move" aria-labelledby="h-move">
+  <div class="wrap">
+    <span class="kicker">7 · Your move</span>
+    <h2 id="h-move">Choosing a course? Ask these questions</h2>
+    <p>AI exposure levels differ a lot between occupations <a class="cite" href="#r-gmyrek">(Gmyrek et al., 2025)</a>. Think of a course or career you're considering and use these questions to reflect on it. <strong>This is a thinking guide, not a prediction.</strong></p>
+    <ul class="check" id="check">
+      <li><label><input type="checkbox"> <span><strong>People:</strong> Does it involve caring for, teaching or persuading people face to face?</span></label></li>
+      <li><label><input type="checkbox"> <span><strong>Judgment:</strong> Will I make decisions and be accountable for them?</span></label></li>
+      <li><label><input type="checkbox"> <span><strong>Hands-on:</strong> Does it involve physical work in real-world places like sites, hospitals, farms or homes?</span></label></li>
+      <li><label><input type="checkbox"> <span><strong>AI as a tool:</strong> Can I picture using AI to help with parts of the work while I steer the result?</span></label></li>
+      <li><label><input type="checkbox"> <span><strong>Growth:</strong> Am I ready to keep learning new tools in this field?</span></label></li>
+    </ul>
+    <div class="meter" id="meter" aria-live="polite">Tick the questions you can answer "yes" to.</div>
+
+    <h3 style="margin-top:36px">Skills worth building now, whatever your strand</h3>
+    <div class="skills">
+      <div class="card"><h3>🔍 Checking AI's work</h3><p style="margin:0">Some Filipino workers now spend extra time verifying AI outputs and checking for errors <a class="cite" href="#r-pids">(PIDS, 2026)</a>. Practice fact-checking now.</p></div>
+      <div class="card"><h3>🤝 Soft skills</h3><p style="margin:0">Communication, critical thinking and creativity "may become even more valuable," according to an expert at a PIDS forum <a class="cite" href="#r-pids">(PIDS, 2026)</a>.</p></div>
+      <div class="card"><h3>🧠 Skills you can show</h3><p style="margin:0">Companies are shifting from degree-based hiring toward skills-based recruitment <a class="cite" href="#r-pids">(PIDS, 2026)</a>. Build a portfolio of what you can actually do.</p></div>
+      <div class="card"><h3>🌱 Keep learning</h3><p style="margin:0">Employers surveyed worldwide expect 170 million jobs to be created and 92 million displaced by 2030 <a class="cite" href="#r-wef">(World Economic Forum, 2025, p. 5)</a>. The ILO urges preparing youth for changing job profiles <a class="cite" href="#r-huynh">(Huynh, 2026, p. 1)</a>.</p></div>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <h3>Using AI at school, the smart way</h3>
+      <ul style="margin:0;padding-left:1.2em">
+        <li>Use it to <strong>understand</strong>, not to skip the thinking.</li>
+        <li><strong>Verify</strong> every fact it gives you against a real source, like this page does.</li>
+        <li><strong>Declare</strong> when you used AI, following your school's rules.</li>
+        <li><strong>Protect</strong> your privacy: don't paste personal info into chatbots.</li>
+      </ul>
+    </div>
+
+    <div class="adults">
+      <h3>For parents &amp; teachers: start the conversation</h3>
+      <p style="margin:0">Instead of asking "Which course is safe from AI?", try asking: <em>"Which tasks in this job do you enjoy, and how could AI help with the rest?"</em> Then look up the job's ILO exposure level together in Section 1.</p>
+    </div>
+
+    <div class="passcard">
+      <div class="ico" aria-hidden="true">📣</div>
+      <div>
+        <h3 style="margin-bottom:6px">Pass it on</h3>
+        <p>Know a classmate who's choosing a course? Send them this page, or take the Myth or Fact quiz together and compare scores. <a href="#top">Back to top ↑</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. REFERENCES -->
+<section id="refs" aria-labelledby="h-refs">
+  <div class="wrap">
+    <span class="kicker">Sources</span>
+    <h2 id="h-refs">References</h2>
+    <p class="note">APA 7th edition. Every citation on this page links here. Page numbers refer to the PDF version of each source.</p>
+    <div class="refs">
+      <ol>
+        <li id="r-brynjolfsson">Brynjolfsson, E., Li, D., &amp; Raymond, L. (2025). Generative AI at work. <em>The Quarterly Journal of Economics, 140</em>(2), 889–942. <a href="https://doi.org/10.1093/qje/qjae044">https://doi.org/10.1093/qje/qjae044</a></li>
+        <li id="r-cucio">Cucio, M., &amp; Hennig, T. (2025). <em>Artificial intelligence and the Philippine labor market: Mapping occupational exposure and complementarity</em> (IMF Working Paper No. 25/43). International Monetary Fund. <a href="https://doi.org/10.5089/9798229001977.001">https://doi.org/10.5089/9798229001977.001</a></li>
+        <li id="r-gmyrek">Gmyrek, P., Berg, J., Kamiński, K., Konopczyński, F., Ładna, A., Nafradi, B., Rosłaniec, K., &amp; Troszyński, M. (2025). <em>Generative AI and jobs: A refined global index of occupational exposure</em> (ILO Working Paper No. 140). International Labour Organization. <a href="https://doi.org/10.54394/HETP0387">https://doi.org/10.54394/HETP0387</a></li>
+        <li id="r-huynh">Huynh, P. (2026). <em>Generative AI and jobs in the Philippines: Labour market exposure and policy implications</em> [Policy brief]. International Labour Organization. <a href="https://doi.org/10.54394/00033217">https://doi.org/10.54394/00033217</a></li>
+        <li id="r-imf">International Monetary Fund. (2024). <em>Philippines: 2024 Article IV consultation—Press release; and staff report</em> (IMF Country Report No. 24/351). <a href="https://www.imf.org/-/media/files/publications/cr/2024/english/1phlea2024001-print-pdf.pdf">https://www.imf.org/-/media/files/publications/cr/2024/english/1phlea2024001-print-pdf.pdf</a></li>
+        <li id="r-pids">Philippine Institute for Development Studies. (2026, May 12). <em>AI threatens entry-level jobs, exposes PH readiness gaps—experts</em> [Press release]. <a href="https://pids.gov.ph/details/news/press-releases/ai-threatens-entry-level-jobs-exposes-ph-readiness-gaps-experts">https://pids.gov.ph/details/news/press-releases/ai-threatens-entry-level-jobs-exposes-ph-readiness-gaps-experts</a></li>
+        <li id="r-tan">Tan, R., &amp; Cabato, R. (2023, August 30). Behind the AI boom, an army of workers in "digital sweatshops." <em>The African</em>. (Originally published in <em>The Washington Post</em>, August 2023.) <a href="https://theafrican.co.za/economy/2023-08-30-behind-the-ai-boom-an-army-of-workers-in-digital-sweatshops/">https://theafrican.co.za/economy/2023-08-30-behind-the-ai-boom-an-army-of-workers-in-digital-sweatshops/</a></li>
+        <li id="r-wef">World Economic Forum. (2025). <em>The future of jobs report 2025</em>. <a href="https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf">https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf</a></li>
+      </ol>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Tasks, Not Jobs</strong> was made by <strong>Jramae Gallos</strong> for DEVC 263 (S&amp;T Communication Material), November 2026.</p>
+    <p class="cc"><svg width="88" height="31" viewBox="0 0 88 31" role="img" aria-label="Creative Commons BY-NC-SA"><rect width="88" height="31" rx="4" fill="var(--surface-2)" stroke="var(--line)"/><text x="44" y="20" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="var(--ink)">CC BY-NC-SA</text></svg>
+    <span>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a>.</span></p>
+    <p><strong>Credits:</strong> Fonts are Space Grotesk and Inter via Google Fonts (SIL Open Font License 1.1). All illustrations, icons and charts are original and drawn in code; emoji are rendered by your device's system font. No third-party images, audio or video are used.</p>
+    <p><strong>AI disclosure:</strong> Claude AI was used as an assisting tool for improving the web UI design, correcting grammatical errors, and conducting research. No text or scripts in the final output were machine-generated or drafted by AI; all were independently written and developed by the author.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // theme toggle
+  var root=document.documentElement, tb=document.getElementById('themeBtn');
+  try{var saved=localStorage.getItem('tnj-theme'); if(saved) root.setAttribute('data-theme',saved);}catch(e){}
+  tb.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    var next=cur==='dark'?'light':'dark'; root.setAttribute('data-theme',next);
+    try{localStorage.setItem('tnj-theme',next);}catch(e){}
+  });
+
+  // progress bar
+  var pb=document.getElementById('progress');
+  function prog(){var h=document.documentElement; var p=h.scrollTop/(h.scrollHeight-h.clientHeight||1); pb.style.width=(p*100)+'%';}
+  addEventListener('scroll',prog,{passive:true}); prog();
+
+  // hook posts
+  document.querySelectorAll('.post').forEach(function(b){
+    b.addEventListener('click',function(){ b.setAttribute('aria-expanded', b.getAttribute('aria-expanded')==='true'?'false':'true'); });
+  });
+
+  // job explorer: official ILO gradients (Gmyrek et al., 2025, Annex)
+  var LEVELS=[
+    {name:'Not exposed',cls:'lo',text:'Most tasks in this job remain relatively unaffected by generative AI.'},
+    {name:'Minimal exposure',cls:'lo',text:'Low overall exposure. Some tasks show moderate potential for automation, but exposure for the job as a whole stays limited.'},
+    {name:'Gradient 1',cls:'mid',text:'Low overall exposure, but some individual tasks could potentially be automated.'},
+    {name:'Gradient 2',cls:'mid',text:'Moderate exposure with a mix: some tasks are exposed to generative AI and others are not, so the impact is uneven.'},
+    {name:'Gradient 3',cls:'hi',text:'Above-moderate exposure. Some tasks remain less exposed, but the potential to automate this job\'s tasks with generative AI is growing.'},
+    {name:'Gradient 4 (highest)',cls:'hi',text:'High exposure across nearly all tasks. Most current tasks in this job have a high potential to be done with generative AI.'}
+  ];
+  var C_G='<a class="cite" href="#r-gmyrek">(Gmyrek et al., 2025)</a>', C_C='<a class="cite" href="#r-cucio">(Cucio &amp; Hennig, 2025)</a>';
+  var jobs=[
+    {name:'Data-entry clerk',isco:'4132 · Data Entry Clerks',lv:5,extra:'Clerical occupations have the highest exposure levels in the ILO index '+C_G+'.'},
+    {name:'Call center agent',isco:'4222 · Contact Centre Information Clerks',lv:4,extra:'The IMF names BPO the Philippines\' most AI-exposed sector and rates BPO workers as highly exposed with low complementarity '+C_C+'.'},
+    {name:'Software developer',isco:'2512 · Software Developers',lv:4,extra:'Software-related jobs saw their exposure scores rise between the ILO\'s 2023 and 2025 studies as AI tools gained new abilities '+C_G+'.'},
+    {name:'Accountant',isco:'2411 · Accountants',lv:3,extra:'Studies can disagree: the ILO rates accountants Gradient 2, while the IMF lists accountants among its examples of high-exposure, low-complementarity jobs '+C_C+'.'},
+    {name:'Graphic designer',isco:'2166 · Graphic and Multimedia Designers',lv:3,extra:'The ILO notes that the multimedia sector is among the leading adopters of generative AI '+C_G+'.'},
+    {name:'High school teacher',isco:'2330 · Secondary Education Teachers',lv:0,extra:'Primary school teachers and special needs teachers are also rated "Not exposed" in the ILO index '+C_G+'.'},
+    {name:'Nurse',isco:'2221 · Nursing Professionals',lv:0,extra:'Community health workers are also rated "Not exposed" in the ILO index '+C_G+'.'},
+    {name:'Electrician (TVL)',isco:'7411 · Building and Related Electricians',lv:0,extra:'This occupation has one of the lower average task scores in the ILO index: 0.19 on a scale from 0 to 1 '+C_G+'.'}
+  ];
+  var chips=document.getElementById('jobChips'), ladder=document.getElementById('ladder').children;
+  jobs.forEach(function(j,i){
+    var b=document.createElement('button'); b.type='button'; b.className='chip'; b.textContent=j.name;
+    b.setAttribute('aria-pressed',i===0?'true':'false');
+    b.addEventListener('click',function(){ chips.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed','false')}); b.setAttribute('aria-pressed','true'); renderJob(j); });
+    chips.appendChild(b);
+  });
+  function renderJob(j){
+    var L=LEVELS[j.lv];
+    document.getElementById('jobTitle').textContent=j.name;
+    document.getElementById('jobCode').textContent='ILO occupation code '+j.isco;
+    for(var i=0;i<ladder.length;i++) ladder[i].classList.toggle('on',i===j.lv);
+    var badge=document.getElementById('jobBadge'); badge.className='level-badge '+L.cls; badge.textContent='ILO exposure level: '+L.name;
+    document.getElementById('jobMeaning').textContent=L.text;
+    document.getElementById('jobExtra').innerHTML='<strong>Also worth knowing:</strong> '+j.extra;
+  }
+  renderJob(jobs[0]);
+
+  // waffle
+  var waffle=document.getElementById('waffle'), wt=document.getElementById('waffleText');
+  for(var i=0;i<100;i++){waffle.appendChild(document.createElement('i'));}
+  var studies={
+    imf:{seg:[['a',22],['b',14]],label:'IMF: of 100 Filipino jobs, 36 are highly exposed to AI. About 22 of these are highly complementary, where AI is more likely to support tasks, and 14 are low-complementarity jobs at risk of replacement. The other 64 are not highly exposed.',
+      html:'<p class="stat">36 <span style="font-size:1rem;font-weight:500">in 100</span></p><p style="margin:0 0 4px">Philippine jobs are <strong>highly exposed</strong> to AI <a class="cite" href="#r-imf">(IMF, 2024)</a>.</p><ul class="wlegend"><li><i class="sw" style="background:var(--human)"></i><span><strong>~22</strong>: the "highly complementary" jobs, where AI is more likely to <em>support</em> than replace tasks. That is more than half of the exposed group.</span></li><li><i class="sw" style="background:var(--auto)"></i><span><strong>14</strong>: low-complementarity jobs at risk of <em>replacement</em> by AI <a class="cite" href="#r-imf">(IMF, 2024)</a>. BPO workers fall in this group <a class="cite" href="#r-cucio">(Cucio &amp; Hennig, 2025)</a>.</span></li><li><i class="sw" style="background:var(--muted)"></i><span><strong>64</strong>: not highly exposed.</span></li></ul>'},
+    ilo:{seg:[['c',24],['b',4]],label:'ILO: of 100 Filipino jobs, about 28 are exposed to generative AI. About 24 are in Gradients 1 to 3, where tasks are likely to change, and about 4 are in the highest group with elevated risk of displacement. The other 72 are not in the exposed groups.',
+      html:'<p class="stat">28 <span style="font-size:1rem;font-weight:500">in 100</span></p><p style="margin:0 0 4px">Philippine jobs (27.7%, or 12.7 million) are <strong>exposed</strong> to generative AI, the highest share among ASEAN countries with comparable data <a class="cite" href="#r-huynh">(Huynh, 2026, pp. 1, 3)</a>.</p><ul class="wlegend"><li><i class="sw" style="background:var(--assist)"></i><span><strong>~24</strong> (24.1%): in Gradients 1–3, where the main impact is likely to be <em>transformation</em> of tasks.</span></li><li><i class="sw" style="background:var(--auto)"></i><span><strong>~4</strong> (3.6%): in the <em>highest</em> exposure group, with elevated risk of job displacement.</span></li><li><i class="sw" style="background:var(--muted)"></i><span><strong>~72</strong>: not in the exposed groups.</span></li></ul>'}
+  };
+  function renderStudy(k){
+    var s=studies[k], cells=waffle.children, idx=0;
+    for(var i=0;i<100;i++) cells[i].className='';
+    s.seg.forEach(function(seg){ for(var j=0;j<seg[1];j++){ cells[idx++].className=seg[0]; } });
+    waffle.setAttribute('aria-label',s.label); wt.innerHTML=s.html;
+  }
+  document.querySelectorAll('[data-study]').forEach(function(b){
+    b.addEventListener('click',function(){ document.querySelectorAll('[data-study]').forEach(function(x){x.setAttribute('aria-pressed','false')}); b.setAttribute('aria-pressed','true'); renderStudy(b.dataset.study); });
+  });
+  renderStudy('imf');
+
+  // quiz, each with its source
+  var qs=[
+    {q:'"Experts say AI will replace 1 in 3 Filipino jobs."',a:false,
+     e:'36% of Philippine jobs are highly <em>exposed</em> to AI, but more than half of those are jobs where AI is more likely to <em>support</em> workers. The share in low-complementarity jobs at risk of replacement is 14%.',
+     s:'International Monetary Fund. (2024). <em>Philippines: 2024 Article IV consultation</em> (Country Report No. 24/351), Staff Report, AI discussion. <a href="https://www.imf.org/-/media/files/publications/cr/2024/english/1phlea2024001-print-pdf.pdf">imf.org (PDF)</a>'},
+    {q:'"In the field of customer-support agents, less-experienced workers gained the most from using an AI assistant than more experienced ones."',a:true,
+     e:'Across 5,172 agents, productivity rose about 15% on average. Less-experienced and lower-skilled workers improved in both speed and quality, while the most experienced saw small gains.',
+     s:'Brynjolfsson, E., Li, D., &amp; Raymond, L. (2025). Generative AI at work. <em>The Quarterly Journal of Economics, 140</em>(2), 889–942, abstract. <a href="https://doi.org/10.1093/qje/qjae044">doi.org/10.1093/qje/qjae044</a>'},
+    {q:'"AI affects men and women in the Philippines equally."',a:false,
+     e:'40.3% of jobs held by women are exposed to generative AI, compared with 19.3% for men. The ILO says women face double the rate of exposure.',
+     s:'Huynh, P. (2026). <em>Generative AI and jobs in the Philippines</em> [Policy brief]. ILO, pp. 1, 5. <a href="https://doi.org/10.54394/00033217">doi.org/10.54394/00033217</a>'},
+    {q:'"AI tools learn entirely on their own, with no human workers involved."',a:false,
+     e:'People label the data used to build AI. Reporters found Filipino freelancers doing this work for Scale AI\'s Remotasks platform, and most of those interviewed reported delayed, reduced or cancelled pay.',
+     s:'Tan, R., &amp; Cabato, R. (2023). Behind the AI boom, an army of workers in "digital sweatshops." Originally published in <em>The Washington Post</em>. <a href="https://theafrican.co.za/economy/2023-08-30-behind-the-ai-boom-an-army-of-workers-in-digital-sweatshops/">theafrican.co.za (republication)</a>'},
+    {q:'"Employers worldwide expect more jobs to be created than displaced by 2030."',a:true,
+     e:'Employers surveyed project 170 million jobs created and 92 million displaced, a net gain of 78 million. These are employer projections, not guarantees.',
+     s:'World Economic Forum. (2025). <em>The future of jobs report 2025</em>, pp. 5, 18. <a href="https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf">weforum.org (PDF)</a>'}
+  ];
+  var box=document.getElementById('quizBox'), right=0, answered=0;
+  qs.forEach(function(item,i){
+    var d=document.createElement('div'); d.className='card q';
+    d.innerHTML='<p style="margin:0;font-weight:600">'+(i+1)+'. '+item.q+'</p><div class="opts"><button type="button" data-v="0">Myth</button><button type="button" data-v="1">Fact</button></div><div class="exp" aria-live="polite"></div>';
+    var btns=d.querySelectorAll('button'), exp=d.querySelector('.exp');
+    btns.forEach(function(b){ b.addEventListener('click',function(){
+      var pick=b.dataset.v==='1', ok=pick===item.a; answered++; if(ok) right++;
+      btns.forEach(function(x){ x.disabled=true; if((x.dataset.v==='1')===item.a) x.classList.add('right'); });
+      if(!ok) b.classList.add('wrong');
+      exp.innerHTML='<strong>'+(ok?'✓ Correct!':'✗ Not quite.')+'</strong> It\'s a <strong>'+(item.a?'Fact':'Myth')+'</strong>. '+item.e+'<span class="src"><strong>Source:</strong> '+item.s+'</span>';
+      d.classList.add('done');
+      if(answered===qs.length) document.getElementById('score').textContent='You got '+right+' of '+qs.length+'. '+(right>=4?'Great, you can now fact-check those reels!':'Scroll back up to review the evidence.');
+    });});
+    box.appendChild(d);
+  });
+
+  // checklist (reflection only, no prediction)
+  var cbs=document.querySelectorAll('#check input'), meter=document.getElementById('meter');
+  cbs.forEach(function(cb){cb.addEventListener('change',function(){
+    var n=0; cbs.forEach(function(x){if(x.checked)n++});
+    meter.innerHTML = n===0?'Tick the questions you can answer "yes" to.'
+      : '<strong>You answered "yes" to '+n+' of 5.</strong> Next, look up a related job\'s ILO exposure level in Section 1. Then ask yourself which of its tasks you\'d want AI to help with, and which skills from the list below you could start building.';
+  });});
+})();
+</script>
+</body>
+</html>
